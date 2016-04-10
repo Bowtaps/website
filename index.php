@@ -6,20 +6,13 @@ $submitted = ($_SERVER['REQUEST_METHOD'] === 'POST');
 /* handle form submissions */
 if ($submitted) {
 	
-	$submit_success = TRUE
+	$submit_success = TRUE;
 	
 	// check if expected form fields exist
 	if ($submit_success) {
 		if (isset($_POST['email'])) {
 			$email_string = $_POST['email'];
 		} else {
-			$submit_success = FALSE;
-		}
-	}
-	
-	// ensure email given is in fact email-formatted string
-	if ($submit_success) {
-		if (filter_var($email_string, FILTER_VALIDATE_EMAIL)) {
 			$submit_success = FALSE;
 		}
 	}
@@ -36,7 +29,7 @@ if ($submitted) {
 	
 	// insert into database
 	if ($submit_success) {
-		$inserted_rows = $db_conn->query("INSERT INTO BetaSignups (Email) VALUES ('".$db_conn->real_escape_string($email_string)."')");
+		$inserted_rows = $db_conn->query("INSERT IGNORE INTO BetaSignups (Email) VALUES ('".$db_conn->real_escape_string($email_string)."')");
 		if ($db_conn->error) {
 			$submit_success = FALSE;
 		}
@@ -58,8 +51,11 @@ if ($submitted) {
       <input type="text" name="email" />
       <input type="submit" />
     </form>
-    <?php if ($submit_success) { ?>
+    <?php if ($submitted) { if ($submit_success) { ?>
     <p>Your submission was successful.</p>
-    <?php } ?>
+    <?php } else { ?>
+    <p>An error occured during submission!</p>
+    <p><?php echo $db_conn->error; ?></p>
+    <?php }} ?>
   </body>
 </html>
