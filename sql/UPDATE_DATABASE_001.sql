@@ -1,0 +1,2 @@
+ALTER TABLE BetaSignups
+	ADD Name VARCHAR(256) AFTER Email;

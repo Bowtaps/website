@@ -24,6 +24,14 @@ if ($submitted) {
 		}
 	}
 	
+	if ($submit_success) {
+		if (isset($_POST['name'])) {
+			$name_string = $_POST['name'];
+		} else {
+			$submit_success = FALSE;
+		}
+	}
+	
 	
 	// connect to database
 	if ($submit_success) {
@@ -36,7 +44,9 @@ if ($submitted) {
 	
 	// insert into database
 	if ($submit_success) {
-		$inserted_rows = $db_conn->query("INSERT IGNORE INTO BetaSignups (Email) VALUES ('".$db_conn->real_escape_string($email_string)."')");
+		$email_val = $db_conn->real_escape_string($email_string);
+		$name_val = $db_conn->real_escape_string($name_string);
+		$inserted_rows = $db_conn->query("INSERT IGNORE INTO BetaSignups (Email, Name) VALUES ('$email_val', '$name_val')");
 		if ($db_conn->error) {
 			$submit_success = FALSE;
 		}
@@ -45,7 +55,6 @@ if ($submitted) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -53,18 +62,43 @@ if ($submitted) {
     <link type="text/css" rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>Test</h1>
-    <form action="." method="post">
-      <input type="text" name="email" />
-      <input type="submit" />
-    </form>
-    <?php if ($submitted) { if ($submit_success) { ?>
-    <p>Your submission was successful.</p>
-    <?php } elseif ($email === FALSE) { ?>
-    <p>We're sorry! Unable to recognize email.</p>
-    <?php } else { ?>
-    <p>We're sorry! An error occured during submission.</p>
-    <p><?php echo $db_conn->error; ?></p>
-    <?php }} ?>
+    <div class="page">
+      <img class="logo app" src="images/crowd-control.png" alt="Crowd Control Logo" />
+      <h1 class="page-title">Crowd Control Beta Signup</h1>
+      <form action="." method="post">
+        <label>
+          Name
+          <input type="text" name="name" placeholder="John Smith" />
+        </label>
+        
+        <label>
+          Email
+          <input type="email" name="email" placeholder="john.smith@email.com" />
+        </label>
+
+        <input type="submit" />
+      </form>
+
+<?php if ($submitted): ?>
+<?php   if ($submit_success): ?>
+      <div class="message success">
+        <p>Your submission was successful.</p>
+      </div>
+<?php   else: ?>
+      <div class="message fail">
+<?php     if ($email === FALSE): ?>
+        <p>We're sorry! Unable to recognize email.</p>
+<?php     else: ?>
+        <p>We're sorry! An error occured during submission.</p>
+<?php     endif; ?>
+<?php   endif; ?>
+      </div>
+<?php endif;?>
+    </div>
+    
+    <footer class="footer">
+      <span class="copyright">Copyright &copy; 2016 Bowtaps LLC.</span>
+      <img class="logo company" src="images/bowtaps-white.png" alt="Bowtaps LLC" />
+    </footer>
   </body>
 </html>
