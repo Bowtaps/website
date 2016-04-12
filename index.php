@@ -17,6 +17,13 @@ if ($submitted) {
 		}
 	}
 	
+	if ($submit_success) {
+		$email = filter_var($email_string, FILTER_VALIDATE_EMAIL);
+		if ($email === FALSE) {
+			$submit_success = FALSE;
+		}
+	}
+	
 	
 	// connect to database
 	if ($submit_success) {
@@ -53,8 +60,10 @@ if ($submitted) {
     </form>
     <?php if ($submitted) { if ($submit_success) { ?>
     <p>Your submission was successful.</p>
+    <?php } elseif ($email === FALSE) { ?>
+    <p>We're sorry! Unable to recognize email.</p>
     <?php } else { ?>
-    <p>An error occured during submission!</p>
+    <p>We're sorry! An error occured during submission.</p>
     <p><?php echo $db_conn->error; ?></p>
     <?php }} ?>
   </body>
