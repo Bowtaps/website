@@ -1,0 +1,157 @@
+html, body {
+  display: block;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: rgb(225, 225, 225);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  color: white;
+  text-shadow: 0.125em 0.125em 1px black;
+  font-family: sans-serif;
+}
+
+.page {
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 700px;
+  width: 90%;
+}
+
+.logo.app {
+  max-width: 128px;
+  display: block;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  position: relative;
+  margin-top: 3em;
+}
+form label {
+  display: inline-block;
+  width: 38%;
+  padding: 0 2%;
+  text-align: left;
+  font-size: 1.1em;
+}
+form input[type="text"],
+form input[type="email"] {
+  margin: 0.25em 0 0;
+  display: block;
+  padding: 0.5em;
+  width: 92%;
+  font-size: 1.15em;
+  outline: none;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid white;
+  border-style: none none solid none;
+  color: white;
+}
+
+form button[type="submit"] {
+  display: block;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 0.4em;
+  border-radius: 8px;
+  border: 3px solid rgb(0, 170, 0);
+  background: white;
+  
+  font-weight: bold;
+  color: rgb(0, 170, 0);
+  box-shadow: none;
+  outline: none;
+  
+  transition: all 100ms linear;
+  
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 1.25em;
+  text-transform: uppercase;
+  
+  cursor: pointer;
+}
+form button[type="submit"]:hover {
+  color: white;
+  background: rgb(0, 170, 0);
+  right: -1.65em;
+  padding-right: 2.05em;
+}
+form button[type="submit"]:active {
+  background: rgb(0, 130, 0);
+  border-color: rgb(0, 130, 0);
+}
+form button[type="submit"] i {
+  position: absolute;
+  right: -1.25em;
+  transition: all 100ms linear;
+}
+form button[type="submit"]:hover i {
+  right: 0.4em;
+}
+
+.message {
+  display: block;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 40px;
+  border-radius: 8px;
+  box-shadow: 2px 3px 0 0 rgba(0,0,0,0.75);
+  padding: 0.75em 1.5em;
+  font-weight: bold;
+}
+.message p {
+  margin: 0;
+}
+.message.fail {
+  background: #b40000;
+}
+.message.success {
+  background: rgb(0, 170, 0);
+  
+  animation-name: fade-out;
+  animation-delay: 3s;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+@keyframes fade-out {
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.0;
+  }
+}
+
+.footer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4px 8px;
+  color: white;
+}
+.footer .copyright {
+  font-weight: bold;
+}
+.footer .logo {
+  float: right;
+  margin: -0.75em 8px 8px;
+  max-height: 32px;
+}

@@ -3,6 +3,17 @@ require_once "config.php";
 
 $submitted = ($_SERVER['REQUEST_METHOD'] === 'POST');
 
+$IMAGES = array(
+  'images/background-0.png',
+  'images/background-1.png',
+  'images/background-2.png',
+  'images/background-4.png',
+  'images/background-5.png',
+  'images/background-6.png',
+  'images/background-7.png'
+);
+$chosen_image = $IMAGES[rand(0,count($IMAGES)-1)];
+
 /* handle form submissions */
 if ($submitted) {
 	
@@ -59,32 +70,37 @@ if ($submitted) {
 <html>
   <head>
     <title>Crowd Control Beta Signup - Bowtaps</title>
-    <link type="text/css" rel="stylesheet" href="styles.css" />
+    <link type="text/css" rel="stylesheet" href="css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" />
+    <link type="image/png" rel="shortcut icon" href="/favicon.png" />
   </head>
   <body>
     <div class="page">
       <img class="logo app" src="images/crowd-control.png" alt="Crowd Control Logo" />
-      <h1 class="page-title">Crowd Control Beta Signup</h1>
+      <h1 class="page-title">Crowd Control</h1>
+      <h2>Sign up to join the beta!</h2>
       <form action="." method="post">
         <label>
           Name
-          <input type="text" name="name" placeholder="John Smith" />
+          <input type="text" name="name" placeholder="John Smith" autofocus autocomplete="off" <?php if ($submitted && !$submit_success) echo 'value="'.$_POST['name'].'" '; ?>/>
         </label>
         
         <label>
           Email
-          <input type="email" name="email" placeholder="john.smith@email.com" />
+          <input type="email" name="email" placeholder="john.smith@email.com" autocomplete="off" <?php if ($submitted && !$submit_success) echo 'value="'.$_POST['email'].'" '; ?>/>
         </label>
 
-        <input type="submit" />
+        <button type="submit">
+          Submit<i class="fa fa-check"></i>
+        </button>
       </form>
 
 <?php if ($submitted): ?>
 <?php   if ($submit_success): ?>
       <div class="message success">
-        <p>Your submission was successful.</p>
+        <p>Success! Thank you!</p>
       </div>
-<?php   else: ?>
+<?php   elseif ($email_string != ''): ?>
       <div class="message fail">
 <?php     if ($email === FALSE): ?>
         <p>We're sorry! Unable to recognize email.</p>
@@ -100,5 +116,11 @@ if ($submitted) {
       <span class="copyright">Copyright &copy; 2016 Bowtaps LLC.</span>
       <img class="logo company" src="images/bowtaps-white.png" alt="Bowtaps LLC" />
     </footer>
+    
+    <style>
+      body {
+        background-image: url('<?php echo $chosen_image; ?>');
+      }
+    </style>
   </body>
 </html>
