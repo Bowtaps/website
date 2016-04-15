@@ -10,7 +10,6 @@ $IMAGES = array(
   'images/background-4.png',
   'images/background-5.png',
   'images/background-6.png',
-  'images/background-7.png'
 );
 $chosen_image = $IMAGES[rand(0,count($IMAGES)-1)];
 
